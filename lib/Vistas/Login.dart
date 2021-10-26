@@ -1,4 +1,4 @@
-import 'package:boletos_abordo/Controladores/auth.dart';
+import 'package:ruta_del_desierto/Controladores/auth.dart';
 import 'package:flutter/material.dart';
 
 class Login extends StatefulWidget {

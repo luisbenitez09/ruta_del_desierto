@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:boletos_abordo/Modelos/MyUser.dart';
+import 'package:ruta_del_desierto/Modelos/MyUser.dart';
 import 'package:http/http.dart' as http;
 import 'package:imei_plugin/imei_plugin.dart';
 

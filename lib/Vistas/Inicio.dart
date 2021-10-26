@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:boletos_abordo/Controladores/auth.dart';
-import 'package:boletos_abordo/Modelos/MyUser.dart';
+import 'package:ruta_del_desierto/Controladores/auth.dart';
+import 'package:ruta_del_desierto/Modelos/MyUser.dart';
 import 'package:http/http.dart' as http;
 
 class Respuesta {
@@ -13,18 +13,13 @@ class Respuesta {
   Respuesta({this.success, this.error});
 
   factory Respuesta.fromJson(Map<String, dynamic> json) {
-    return Respuesta(
-      success: json['success'],
-      error: json['errorMessage']
-    );
+    return Respuesta(success: json['success'], error: json['errorMessage']);
   }
 }
 
 class Inicio extends StatefulWidget {
-
   final Function changeView;
-  Inicio({ this.changeView });
-
+  Inicio({this.changeView});
 
   @override
   _InicioState createState() => _InicioState();
@@ -33,7 +28,8 @@ class Inicio extends StatefulWidget {
 class _InicioState extends State<Inicio> {
   String pass = '';
   //TODO Future update, connect to firebase cloud function
-  static const URL = 'http://187.141.142.89:5558/WsServicesApiRsd/ruta/checkticket';
+  static const URL =
+      'http://187.141.142.89:5558/WsServicesApiRsd/ruta/checkticket';
 
   final passInput = TextEditingController();
   clearInput() {
@@ -51,7 +47,11 @@ class _InicioState extends State<Inicio> {
   static const verde = Color(0xFF26aa39);
   static const morado = Color(0xFF5d3a8e);
   static const naranja = Color(0xFFefb14e);
-  Color panel, panelMorado = morado, panelVerde = verde, panelRojo = rojo, orange = naranja;
+  Color panel,
+      panelMorado = morado,
+      panelVerde = verde,
+      panelRojo = rojo,
+      orange = naranja;
 
   String messageES, messageEN;
   String defaultMsg = 'Escanea tu boleto';
@@ -70,12 +70,10 @@ class _InicioState extends State<Inicio> {
   String driverName = '';
   String driverUID = '';
 
-
   var qrText = "";
   var locked = false;
 
   int counterCode = 0;
-
 
   @override
   Widget build(BuildContext context) {
@@ -94,6 +92,7 @@ class _InicioState extends State<Inicio> {
           myFocusNode = FocusNode();
         });
       }
+
       setName();
 
       messageES = defaultMsg;
@@ -102,60 +101,60 @@ class _InicioState extends State<Inicio> {
       firstLoad = false;
     }
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0.0,
-      ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            DrawerHeader(
-              child: Text(
-                'Menú',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 25.0,
-                  fontFamily: 'Gilroy',
-                ),
-              ),
-              decoration: BoxDecoration(
-                color: panelMorado,
-              ),
-            ),
-            ListTile(
-              title: Text(
-                'Cerrar Sesión',
-                style: TextStyle(
-                  color: Colors.red,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20.0,
-                  fontFamily: 'Gilroy',
-                ),
-              ),
-              onTap: () {
-                _askMyPass('logOut');
-              },
-            ),
-          ],
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0.0,
         ),
-      ),
-      resizeToAvoidBottomInset: true,
-      body: CustomPaint(
-        painter: BackgroundPainter(),
-        child: Row(
-          children: <Widget>[
-            Container(
-              width: w / 2,
-              height: panH,
-              margin: EdgeInsets.only(left: 50),
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Container(
-                      child: Row(
+        drawer: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              DrawerHeader(
+                child: Text(
+                  'Menú',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25.0,
+                    fontFamily: 'Gilroy',
+                  ),
+                ),
+                decoration: BoxDecoration(
+                  color: panelMorado,
+                ),
+              ),
+              ListTile(
+                title: Text(
+                  'Cerrar Sesión',
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20.0,
+                    fontFamily: 'Gilroy',
+                  ),
+                ),
+                onTap: () {
+                  _askMyPass('logOut');
+                },
+              ),
+            ],
+          ),
+        ),
+        resizeToAvoidBottomInset: true,
+        body: CustomPaint(
+          painter: BackgroundPainter(),
+          child: Row(
+            children: <Widget>[
+              Container(
+                width: w / 2,
+                height: panH,
+                margin: EdgeInsets.only(left: 50),
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Container(
+                          child: Row(
                         children: <Widget>[
                           Container(
                             child: Text(
@@ -179,207 +178,203 @@ class _InicioState extends State<Inicio> {
                             ),
                           )
                         ],
-                      )
-                    ),
-                    Text(
-                      driver,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 40.0,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Gilroy',
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(top: 60.0),
-                      child: Text(
-                        'Ruta del Desierto les desea un excelente día.',
+                      )),
+                      Text(
+                        driver,
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 28.0,
+                          fontSize: 40.0,
                           fontWeight: FontWeight.bold,
                           fontFamily: 'Gilroy',
                         ),
                       ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(top: 60.0),
-                      child: Text(
-                        'Ruta del Desierto wishes you an excelent day.',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 28.0,
-                          fontFamily: 'Gilroy',
+                      Container(
+                        margin: EdgeInsets.only(top: 60.0),
+                        child: Text(
+                          'Ruta del Desierto les desea un excelente día.',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 28.0,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Gilroy',
+                          ),
                         ),
                       ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(top: panH / 8),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Text(
-                                '¿Conduzco mal? ',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20.0,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'Gilroy',
-                                ),
+                      Container(
+                        margin: EdgeInsets.only(top: 60.0),
+                        child: Text(
+                          'Ruta del Desierto wishes you an excelent day.',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 28.0,
+                            fontFamily: 'Gilroy',
+                          ),
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(top: panH / 8),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text(
+                              '¿Conduzco mal? ',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Gilroy',
                               ),
-                              Text(
-                                ' / Bad driving?',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20.0,
-                                  fontFamily: 'Gilroy',
-                                ),
-                              )
-                            ],
-                          ),
-                    ),
-                    Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                            ),
+                            Text(
+                              ' / Bad driving?',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20.0,
+                                fontFamily: 'Gilroy',
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                      Container(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text(
+                              'REPORTAME ',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Gilroy',
+                              ),
+                            ),
+                            Text(
+                              ' / REPORT ME',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20.0,
+                                fontFamily: 'Gilroy',
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                      Container(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              //TODO change number
+                              '612-123-45-67',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Gilroy',
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              Container(
+                width: (w / 2) - 75.0,
+                height: panH,
+                margin: EdgeInsets.only(bottom: 25.0),
+                child: Material(
+                  elevation: 50.0,
+                  borderRadius: BorderRadius.circular(30.0),
+                  shadowColor: panel,
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: panel,
+                        borderRadius: BorderRadius.circular(30.0)),
+                    child: SingleChildScrollView(
+                      child: Column(
                         children: <Widget>[
-                          Text(
-                            'REPORTAME ',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'Gilroy',
+                          Container(
+                            margin: EdgeInsets.only(top: h / 30.0),
+                            child: Text(
+                              messageES,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'Gilroy',
+                                fontWeight: FontWeight.bold,
+                                fontSize: 40,
+                              ),
                             ),
                           ),
-                          Text(
-                            ' / REPORT ME',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20.0,
-                              fontFamily: 'Gilroy',
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                    Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            //TODO change number
-                            '612-123-45-67',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'Gilroy',
+                          Container(
+                            child: Text(
+                              messageEN,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'Gilroy',
+                                fontSize: 30,
+                              ),
                             ),
                           ),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ),
-            Container(
-              width: (w / 2) - 75.0,
-              height: panH,
-              margin: EdgeInsets.only(bottom: 25.0),
-              child: Material(
-                elevation: 50.0,
-                borderRadius: BorderRadius.circular(30.0),
-                shadowColor: panel,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: panel,
-                    borderRadius: BorderRadius.circular(30.0)
-                  ),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: <Widget>[
-                        Container(
-                          margin: EdgeInsets.only(top: h / 30.0),
-                          child: Text(
-                            messageES,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: 'Gilroy',
-                              fontWeight: FontWeight.bold,
-                              fontSize: 40,
-                            ),
-                          ),
-                        ),
-                        Container(
-                          child: Text(
-                            messageEN,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: 'Gilroy',
-                              fontSize: 30,
-                            ),
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(top: panH / 10.0),
-                          width: 200.0,
-                          height: 200.0,
-                          child: TextField(
-                            controller: codeInput,
-                            focusNode: myFocusNode,
-                            autofocus: true,
-                            onChanged: (code) async {
-                              setState(() {
-                                counterCode++;
-                                FocusScope.of(context).requestFocus(myFocusNode);
-                              });
-                              if (counterCode >= 36) {
+                          Container(
+                            margin: EdgeInsets.only(top: panH / 10.0),
+                            width: 200.0,
+                            height: 200.0,
+                            child: TextField(
+                              controller: codeInput,
+                              focusNode: myFocusNode,
+                              autofocus: true,
+                              onChanged: (code) async {
                                 setState(() {
-                                  qrText = code;
-                                  FocusScope.of(context).unfocus();
+                                  counterCode++;
+                                  FocusScope.of(context)
+                                      .requestFocus(myFocusNode);
                                 });
-                                _onReaded();
-
-                              }
-
-
-                            },
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(top: h / 25.0),
-                          child: Text(
-                            alert,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: 'Gilroy',
-                              fontWeight: FontWeight.bold,
-                              fontSize: 40,
+                                if (counterCode >= 36) {
+                                  setState(() {
+                                    qrText = code;
+                                    FocusScope.of(context).unfocus();
+                                  });
+                                  _onReaded();
+                                }
+                              },
                             ),
                           ),
-                        ),
-                        Container(
-                          child: Text(
-                            alertEN,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: 'Gilroy',
-                              fontSize: 30,
+                          Container(
+                            margin: EdgeInsets.only(top: h / 25.0),
+                            child: Text(
+                              alert,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'Gilroy',
+                                fontWeight: FontWeight.bold,
+                                fontSize: 40,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                          Container(
+                            child: Text(
+                              alertEN,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'Gilroy',
+                                fontSize: 30,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            )
-          ],
-        ),
-      )
-    );
+              )
+            ],
+          ),
+        ));
   }
+
   Future<void> _askMyPass(String action) async {
     AuthService _auth = new AuthService();
 
@@ -390,7 +385,7 @@ class _InicioState extends State<Inicio> {
         final user = Provider.of<MyUser>(context);
         return AlertDialog(
           title: Text(
-              'Requiere verificación',
+            'Requiere verificación',
             style: TextStyle(
               fontFamily: 'Gilroy',
               fontWeight: FontWeight.bold,
@@ -401,9 +396,7 @@ class _InicioState extends State<Inicio> {
               children: <Widget>[
                 Text(
                   'Ingresa tu contraseña',
-                  style: TextStyle(
-                    fontFamily: 'Gilroy'
-                  ),
+                  style: TextStyle(fontFamily: 'Gilroy'),
                 ),
                 Container(
                   child: TextField(
@@ -412,10 +405,7 @@ class _InicioState extends State<Inicio> {
                     decoration: InputDecoration(
                       hintText: 'Contraseña',
                     ),
-                    style: TextStyle(
-                        fontFamily: 'Gilroy',
-                        fontSize: 15.0
-                    ),
+                    style: TextStyle(fontFamily: 'Gilroy', fontSize: 15.0),
                     onChanged: (val) {
                       setState(() => pass = val);
                     },
@@ -428,7 +418,7 @@ class _InicioState extends State<Inicio> {
             TextButton(
               child: Text('Aceptar'),
               onPressed: () async {
-                dynamic result = await _auth.sigIn(user.email, pass,'Confirm');
+                dynamic result = await _auth.sigIn(user.email, pass, 'Confirm');
 
                 if (result == null) {
                   setState(() => clearInput());
@@ -459,6 +449,7 @@ class _InicioState extends State<Inicio> {
       },
     );
   }
+
   Future<void> _badPass() async {
     return showDialog<void>(
       context: context,
@@ -486,17 +477,17 @@ class _InicioState extends State<Inicio> {
   }
 
   void _onReaded() async {
-
     var data = {
       "param1": qrText,
       "param2": uid,
       "param3": "725" //Check if its still needed
     };
-    var response = await http.post(URL,headers: {
-      "Authorization": "Basic ZWMwdXMzcjpqbnRoJDEzODMh",
-      "Content-Type": "application/json"
-    },
-    body: jsonEncode(data));
+    var response = await http.post(URL,
+        headers: {
+          "Authorization": "Basic ZWMwdXMzcjpqbnRoJDEzODMh",
+          "Content-Type": "application/json"
+        },
+        body: jsonEncode(data));
 
     var res = jsonDecode(response.body);
     print(res);
@@ -506,9 +497,8 @@ class _InicioState extends State<Inicio> {
       FocusScope.of(context).requestFocus(myFocusNode);
     });
 
-
     if (response.statusCode == 200) {
-      Respuesta res =  Respuesta.fromJson(jsonDecode(response.body));
+      Respuesta res = Respuesta.fromJson(jsonDecode(response.body));
       if (res.success) {
         setState(() {
           panel = panelVerde;
@@ -524,7 +514,6 @@ class _InicioState extends State<Inicio> {
           alertEN = msjAlertEN;
         });
       }
-
     } else {
       setState(() {
         panel = panelRojo;
@@ -545,13 +534,10 @@ class _InicioState extends State<Inicio> {
       clearCodeInput();
       FocusScope.of(context).requestFocus(myFocusNode);
     });
-
   }
-
 }
 
-
-class BackgroundPainter extends CustomPainter{
+class BackgroundPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final h = size.height;
@@ -571,12 +557,12 @@ class BackgroundPainter extends CustomPainter{
     Paint paint = new Paint();
 
     Path mainBackground = Path();
-    mainBackground.addRect(Rect.fromLTRB(0,-80.0, w, h));
+    mainBackground.addRect(Rect.fromLTRB(0, -80.0, w, h));
     paint.color = mainPurple;
     canvas.drawPath(mainBackground, paint);
 
     Path darkP = new Path();
-    darkP.moveTo(w * 0.11,h * -0.2);
+    darkP.moveTo(w * 0.11, h * -0.2);
     darkP.quadraticBezierTo(w * 0.58, h * -0.0, w * 0.6, h);
     darkP.lineTo(w, h);
     darkP.lineTo(w, h * -0.2);
@@ -585,34 +571,30 @@ class BackgroundPainter extends CustomPainter{
     canvas.drawPath(darkP, paint);
 
     Path lightP = new Path();
-    lightP.moveTo(0,h * 0.7);
+    lightP.moveTo(0, h * 0.7);
     lightP.quadraticBezierTo(w * 0.15, h * -0.05, w * 0.5, h * -0.2);
     lightP.lineTo(0, h * -0.2);
     lightP.close();
     paint.color = lightPurple;
     canvas.drawPath(lightP, paint);
 
-
-
     Path mainO = new Path();
     mainO.moveTo(w * 0.565, h * -0.2);
     mainO.quadraticBezierTo(w * 0.6, h * 0.5, w * 0.45, h);
     mainO.lineTo(w * 0.78, h);
-    mainO.quadraticBezierTo(w , h * 0.7, w, h * -0.2);
+    mainO.quadraticBezierTo(w, h * 0.7, w, h * -0.2);
     mainO.close();
     paint.color = mainOrange;
     canvas.drawPath(mainO, paint);
 
     Path lightO = new Path();
-    lightO.moveTo(w * 0.55,h * 0.49);
+    lightO.moveTo(w * 0.55, h * 0.49);
     lightO.quadraticBezierTo(w * 0.59, h * 0.7, w * 0.6, h);
     lightO.lineTo(w * 0.45, h);
     lightO.quadraticBezierTo(w * 0.53, h * 0.73, w * 0.55, h * 0.49);
     lightO.close();
     paint.color = lightOrange;
     canvas.drawPath(lightO, paint);
-
-
 
     Path purpleRing = new Path();
     purpleRing.moveTo(w * 0.7, h * -0.2);
@@ -647,12 +629,10 @@ class BackgroundPainter extends CustomPainter{
     pinkShape.close();
     paint.color = pink;
     canvas.drawPath(pinkShape, paint);
-
   }
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
     return oldDelegate != this;
   }
-  
 }

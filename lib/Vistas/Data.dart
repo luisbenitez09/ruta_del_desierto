@@ -1,22 +1,19 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:boletos_abordo/Modelos/MyUser.dart';
-import 'package:boletos_abordo/Controladores/auth.dart';
+import 'package:ruta_del_desierto/Modelos/MyUser.dart';
+import 'package:ruta_del_desierto/Controladores/auth.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 
-
 class Data extends StatefulWidget {
-
   final Function changeView;
-  Data({ this.changeView });
+  Data({this.changeView});
 
   @override
   _DataState createState() => _DataState();
 }
 
 class _DataState extends State<Data> {
-
   static const myPurple = Color(0xFF5d3a8e);
   static const myOrange = Color(0xFFefb14e);
   Color purplePanel = myPurple, orange = myOrange;
@@ -50,19 +47,19 @@ class _DataState extends State<Data> {
   double driverCount = 0.0;
   String fullUID = '';
 
-  String url = 'http://187.141.142.89:5558/WsServicesApiRsd/ruta/resumen/getdata/';
+  String url =
+      'http://187.141.142.89:5558/WsServicesApiRsd/ruta/resumen/getdata/';
   final passInput = TextEditingController();
   clearInput() {
     passInput.clear();
   }
 
   getData() async {
-
     setState(() {
       fullUID = '$url$uid';
     });
 
-    var response = await http.get(fullUID,headers: {
+    var response = await http.get(fullUID, headers: {
       "Authorization": "Basic ZWMwdXMzcjpqbnRoJDEzODMh",
       "Content-Type": "application/json"
     });
@@ -70,59 +67,62 @@ class _DataState extends State<Data> {
     if (response.statusCode == 200) {
       var res = jsonDecode(response.body);
       setState(() {
-        for(int i =0; i<6; i++) {
+        for (int i = 0; i < 6; i++) {
           try {
-            switch(res['list'][i]['param1']) {
-              case 'Servicio Local':  quantity1 = res['list'][i]['param2'];
-              total1 = res['list'][i]['param3'];
-              type1 = 'Servicio Local\n';
-              driverCount += double.parse(res['list'][i]['param3']);
-              break;
-              case 'Servicio Intermedio':  quantity2 = res['list'][i]['param2'];
-              total2 = res['list'][i]['param3'];
-              type2 = 'Servicio Intermedio\n';
-              driverCount += double.parse(res['list'][i]['param3']);
-              break;
-              case 'Servicio Directo':  quantity3 = res['list'][i]['param2'];
-              total3 = res['list'][i]['param3'];
-              type3 = 'Servicio Directo\n';
-              driverCount += double.parse(res['list'][i]['param3']);
-              break;
-              case 'Servicio Aeropuerto':  quantity4 = res['list'][i]['param2'];
-              total4 = res['list'][i]['param3'];
-              type4 = 'Servicio Aeropuerto\n';
-              driverCount += double.parse(res['list'][i]['param3']);
-              break;
-              case 'Servicio Intermedio Preferente':  quantity5 = res['list'][i]['param2'];
-              total5 = res['list'][i]['param3'];
-              type5 = 'Servicio Intermedio Preferente\n';
-              driverCount += double.parse(res['list'][i]['param3']);
-              break;
-              case 'Servicio empleados Aereopuerto':  quantity6 = res['list'][i]['param2'];
-              total6 = res['list'][i]['param3'];
-              type6 = 'Servicio Empleados Aeropuerto\n';
-              driverCount += double.parse(res['list'][i]['param3']);
-              break;
+            switch (res['list'][i]['param1']) {
+              case 'Servicio Local':
+                quantity1 = res['list'][i]['param2'];
+                total1 = res['list'][i]['param3'];
+                type1 = 'Servicio Local\n';
+                driverCount += double.parse(res['list'][i]['param3']);
+                break;
+              case 'Servicio Intermedio':
+                quantity2 = res['list'][i]['param2'];
+                total2 = res['list'][i]['param3'];
+                type2 = 'Servicio Intermedio\n';
+                driverCount += double.parse(res['list'][i]['param3']);
+                break;
+              case 'Servicio Directo':
+                quantity3 = res['list'][i]['param2'];
+                total3 = res['list'][i]['param3'];
+                type3 = 'Servicio Directo\n';
+                driverCount += double.parse(res['list'][i]['param3']);
+                break;
+              case 'Servicio Aeropuerto':
+                quantity4 = res['list'][i]['param2'];
+                total4 = res['list'][i]['param3'];
+                type4 = 'Servicio Aeropuerto\n';
+                driverCount += double.parse(res['list'][i]['param3']);
+                break;
+              case 'Servicio Intermedio Preferente':
+                quantity5 = res['list'][i]['param2'];
+                total5 = res['list'][i]['param3'];
+                type5 = 'Servicio Intermedio Preferente\n';
+                driverCount += double.parse(res['list'][i]['param3']);
+                break;
+              case 'Servicio empleados Aereopuerto':
+                quantity6 = res['list'][i]['param2'];
+                total6 = res['list'][i]['param3'];
+                type6 = 'Servicio Empleados Aeropuerto\n';
+                driverCount += double.parse(res['list'][i]['param3']);
+                break;
             }
-          } catch(e) {}
+          } catch (e) {}
         }
         subtotal = driverCount.toString();
       });
     }
   }
 
-
-
   @override
   Widget build(BuildContext context) {
-
     double h = MediaQuery.of(context).size.height;
     double panH = h - 40.0;
     double w = MediaQuery.of(context).size.width;
 
     if (firstLoad) {
       final user = Provider.of<MyUser>(context);
-      setName()  {
+      setName() {
         driverName = user.name;
         driverUID = user.uid;
         setState(() {
@@ -131,10 +131,10 @@ class _DataState extends State<Data> {
         });
         getData();
       }
+
       setName();
       firstLoad = false;
     }
-
 
     return Scaffold(
         appBar: AppBar(
@@ -156,21 +156,20 @@ class _DataState extends State<Data> {
                     children: <Widget>[
                       Container(
                           child: Row(
-                            children: <Widget>[
-                              Container(
-                                child: Text(
-                                  'Cuenta de:',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20.0,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: 'Gilroy',
-                                  ),
-                                ),
+                        children: <Widget>[
+                          Container(
+                            child: Text(
+                              'Cuenta de:',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Gilroy',
                               ),
-                            ],
-                          )
-                      ),
+                            ),
+                          ),
+                        ],
+                      )),
                       Text(
                         driver,
                         style: TextStyle(
@@ -196,229 +195,232 @@ class _DataState extends State<Data> {
                           margin: EdgeInsets.only(top: 5.0),
                           child: Table(
                             children: [
-                              TableRow(
-                                  children: [
-                                    Text(
-                                      'Tipo de Boleto',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontFamily: 'Gilroy',
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    Text(
-                                      'Cantidad',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontFamily: 'Gilroy',
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    Text(
-                                      'Total',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontFamily: 'Gilroy',
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    )
-                                  ]
-                              ),
-                              TableRow(
-                                  children: [
-                                    Text(type1,
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontFamily: 'Gilroy',
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    Text(quantity1,
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontFamily: 'Gilroy',
-                                        fontSize: 20.0,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    Text(total1,
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontFamily: 'Gilroy',
-                                        fontSize: 20.0,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    )
-                                  ]
-                              ),
-                              TableRow(
-                                  children: [
-                                    Text(type2,
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontFamily: 'Gilroy',
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    Text(quantity2,
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontFamily: 'Gilroy',
-                                        fontSize: 20.0,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    Text(total2,
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontFamily: 'Gilroy',
-                                        fontSize: 20.0,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    )
-                                  ]
-                              ),
-                              TableRow(
-                                  children: [
-                                    Text(type3,
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontFamily: 'Gilroy',
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    Text(quantity3,
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontFamily: 'Gilroy',
-                                        fontSize: 20.0,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    Text(total3,
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontFamily: 'Gilroy',
-                                        fontSize: 20.0,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    )
-                                  ]
-                              ),
-                              TableRow(
-                                  children: [
-                                    Text(type4,
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontFamily: 'Gilroy',
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    Text(quantity4,
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontFamily: 'Gilroy',
-                                        fontSize: 20.0,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    Text(total4,
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontFamily: 'Gilroy',
-                                        fontSize: 20.0,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    )
-                                  ]
-                              ),
-                              TableRow(
-                                  children: [
-                                    Text(type5,
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontFamily: 'Gilroy',
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    Text(quantity5,
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontFamily: 'Gilroy',
-                                        fontSize: 20.0,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    Text(total5,
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontFamily: 'Gilroy',
-                                        fontSize: 20.0,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    )
-                                  ]
-                              ),
-                              TableRow(
-                                  children: [
-                                    Text(type6,
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontFamily: 'Gilroy',
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    Text(quantity6,
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontFamily: 'Gilroy',
-                                        fontSize: 20.0,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    Text(total6,
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontFamily: 'Gilroy',
-                                        fontSize: 20.0,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    )
-                                  ]
-                              ),
+                              TableRow(children: [
+                                Text(
+                                  'Tipo de Boleto',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'Gilroy',
+                                    fontSize: 15.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Text(
+                                  'Cantidad',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'Gilroy',
+                                    fontSize: 15.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Text(
+                                  'Total',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'Gilroy',
+                                    fontSize: 15.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                )
+                              ]),
+                              TableRow(children: [
+                                Text(
+                                  type1,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'Gilroy',
+                                    fontSize: 15.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Text(
+                                  quantity1,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'Gilroy',
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Text(
+                                  total1,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'Gilroy',
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                )
+                              ]),
+                              TableRow(children: [
+                                Text(
+                                  type2,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'Gilroy',
+                                    fontSize: 15.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Text(
+                                  quantity2,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'Gilroy',
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Text(
+                                  total2,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'Gilroy',
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                )
+                              ]),
+                              TableRow(children: [
+                                Text(
+                                  type3,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'Gilroy',
+                                    fontSize: 15.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Text(
+                                  quantity3,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'Gilroy',
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Text(
+                                  total3,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'Gilroy',
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                )
+                              ]),
+                              TableRow(children: [
+                                Text(
+                                  type4,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'Gilroy',
+                                    fontSize: 15.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Text(
+                                  quantity4,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'Gilroy',
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Text(
+                                  total4,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'Gilroy',
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                )
+                              ]),
+                              TableRow(children: [
+                                Text(
+                                  type5,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'Gilroy',
+                                    fontSize: 15.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Text(
+                                  quantity5,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'Gilroy',
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Text(
+                                  total5,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'Gilroy',
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                )
+                              ]),
+                              TableRow(children: [
+                                Text(
+                                  type6,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'Gilroy',
+                                    fontSize: 15.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Text(
+                                  quantity6,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'Gilroy',
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Text(
+                                  total6,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'Gilroy',
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                )
+                              ]),
                             ],
-                          )
-                      ),
+                          )),
                     ],
                   ),
                 ),
@@ -431,13 +433,11 @@ class _DataState extends State<Data> {
                   elevation: 50.0,
                   borderRadius: BorderRadius.circular(30.0),
                   shadowColor: purplePanel,
-
                   child: Container(
                     width: 390.0,
                     decoration: BoxDecoration(
                         color: purplePanel,
-                        borderRadius: BorderRadius.circular(30.0)
-                    ),
+                        borderRadius: BorderRadius.circular(30.0)),
                     child: SingleChildScrollView(
                       child: Column(
                         children: <Widget>[
@@ -453,7 +453,6 @@ class _DataState extends State<Data> {
                               ),
                             ),
                           ),
-
                           Container(
                             margin: EdgeInsets.only(top: 80.0),
                             child: Text(
@@ -481,10 +480,12 @@ class _DataState extends State<Data> {
                                     _auth.signOut();
                                   },
                                   style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all(Colors.orange),
-                                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(30.0)
-                                    )),
+                                    backgroundColor: MaterialStateProperty.all(
+                                        Colors.orange),
+                                    shape: MaterialStateProperty.all(
+                                        RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(30.0))),
                                   ),
                                   child: Text(
                                     'Aceptar',
@@ -492,8 +493,7 @@ class _DataState extends State<Data> {
                                         color: Colors.white,
                                         fontFamily: 'Montserrat',
                                         fontWeight: FontWeight.bold,
-                                        fontSize: 18.0
-                                    ),
+                                        fontSize: 18.0),
                                   ),
                                 ),
                               ),
@@ -507,13 +507,11 @@ class _DataState extends State<Data> {
               )
             ],
           ),
-        )
-    );
+        ));
   }
-
 }
 
-class BackgroundPainter extends CustomPainter{
+class BackgroundPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final h = size.height;
@@ -533,12 +531,12 @@ class BackgroundPainter extends CustomPainter{
     Paint paint = new Paint();
 
     Path mainBackground = Path();
-    mainBackground.addRect(Rect.fromLTRB(0,-80.0, w, h));
+    mainBackground.addRect(Rect.fromLTRB(0, -80.0, w, h));
     paint.color = mainPurple;
     canvas.drawPath(mainBackground, paint);
 
     Path darkP = new Path();
-    darkP.moveTo(w * 0.11,h * -0.2);
+    darkP.moveTo(w * 0.11, h * -0.2);
     darkP.quadraticBezierTo(w * 0.58, h * -0.0, w * 0.6, h);
     darkP.lineTo(w, h);
     darkP.lineTo(w, h * -0.2);
@@ -547,34 +545,30 @@ class BackgroundPainter extends CustomPainter{
     canvas.drawPath(darkP, paint);
 
     Path lightP = new Path();
-    lightP.moveTo(0,h * 0.7);
+    lightP.moveTo(0, h * 0.7);
     lightP.quadraticBezierTo(w * 0.15, h * -0.05, w * 0.5, h * -0.2);
     lightP.lineTo(0, h * -0.2);
     lightP.close();
     paint.color = lightPurple;
     canvas.drawPath(lightP, paint);
 
-
-
     Path mainO = new Path();
     mainO.moveTo(w * 0.565, h * -0.2);
     mainO.quadraticBezierTo(w * 0.6, h * 0.5, w * 0.45, h);
     mainO.lineTo(w * 0.78, h);
-    mainO.quadraticBezierTo(w , h * 0.7, w, h * -0.2);
+    mainO.quadraticBezierTo(w, h * 0.7, w, h * -0.2);
     mainO.close();
     paint.color = mainOrange;
     canvas.drawPath(mainO, paint);
 
     Path lightO = new Path();
-    lightO.moveTo(w * 0.55,h * 0.49);
+    lightO.moveTo(w * 0.55, h * 0.49);
     lightO.quadraticBezierTo(w * 0.59, h * 0.7, w * 0.6, h);
     lightO.lineTo(w * 0.45, h);
     lightO.quadraticBezierTo(w * 0.53, h * 0.73, w * 0.55, h * 0.49);
     lightO.close();
     paint.color = lightOrange;
     canvas.drawPath(lightO, paint);
-
-
 
     Path purpleRing = new Path();
     purpleRing.moveTo(w * 0.7, h * -0.2);
@@ -609,12 +603,10 @@ class BackgroundPainter extends CustomPainter{
     pinkShape.close();
     paint.color = pink;
     canvas.drawPath(pinkShape, paint);
-
   }
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
     return oldDelegate != this;
   }
-
 }

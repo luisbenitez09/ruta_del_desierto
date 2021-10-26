@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:boletos_abordo/Vistas/Inicio.dart';
-import 'package:boletos_abordo/Vistas/Data.dart';
+import 'package:ruta_del_desierto/Vistas/Inicio.dart';
+import 'package:ruta_del_desierto/Vistas/Data.dart';
 
 class Logged extends StatefulWidget {
   @override

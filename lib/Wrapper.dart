@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:boletos_abordo/Modelos/MyUser.dart';
-import 'package:boletos_abordo/Vistas/Login.dart';
-import 'package:boletos_abordo/Vistas/Logged.dart';
+import 'package:ruta_del_desierto/Modelos/MyUser.dart';
+import 'package:ruta_del_desierto/Vistas/Login.dart';
+import 'package:ruta_del_desierto/Vistas/Logged.dart';
 
 class Wrapper extends StatelessWidget {
   @override

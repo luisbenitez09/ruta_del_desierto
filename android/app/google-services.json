@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "112706494328",
+    "project_id": "boletos-abordo-305106",
+    "storage_bucket": "boletos-abordo-305106.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:112706494328:android:516b529069ca9fd8b7728d",
+        "android_client_info": {
+          "package_name": "com.ruta_del_desierto.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "112706494328-8de3kpness0lj7mr50crt36ql23hb91o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ruta_del_desierto.app",
+            "certificate_hash": "2dd90fec97ec6b85aed80e0d46617966be9748d2"
+          }
+        },
+        {
+          "client_id": "112706494328-kmg03cl7cm1r6rt2c6nkmr2cos5d3igh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAqk73vmMf0gxPrQZYAxaLO8ufsq1NhUnU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "112706494328-kmg03cl7cm1r6rt2c6nkmr2cos5d3igh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

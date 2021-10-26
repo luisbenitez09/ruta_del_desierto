@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:boletos_abordo/Controladores/auth.dart';
-import 'package:boletos_abordo/Modelos/MyUser.dart';
-import 'package:boletos_abordo/Wrapper.dart';
-import 'package:boletos_abordo/Vistas/Login.dart';
-import 'package:boletos_abordo/Vistas/Inicio.dart';
-import 'package:boletos_abordo/Vistas/Data.dart';
+import 'package:ruta_del_desierto/Controladores/auth.dart';
+import 'package:ruta_del_desierto/Modelos/MyUser.dart';
+import 'package:ruta_del_desierto/Wrapper.dart';
+import 'package:ruta_del_desierto/Vistas/Login.dart';
+import 'package:ruta_del_desierto/Vistas/Inicio.dart';
+import 'package:ruta_del_desierto/Vistas/Data.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
