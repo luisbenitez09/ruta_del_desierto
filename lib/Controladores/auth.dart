@@ -1,12 +1,12 @@
-import 'dart:convert';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ruta_del_desierto/Modelos/MyUser.dart';
-import 'package:http/http.dart' as http;
 import 'package:imei_plugin/imei_plugin.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final CollectionReference collectionReference = FirebaseFirestore.instance.collection("tablets-imei");
+
   static const URL = 'http://187.141.142.89:5558/WsServicesApiRsd/ruta/session';
   static const URL2 =
       'http://187.141.142.89:5558/WsServicesApiRsd/ruta/endsession';
@@ -26,46 +26,38 @@ class AuthService {
 
   //Sign in with mail and pass
   Future sigIn(String email, String password, String action) async {
-    try {
-      UserCredential result = await _auth.signInWithEmailAndPassword(
-          email: email, password: password);
-      User user = result.user;
-      uid = user.uid;
 
-      if (action == 'Inicio') {
-        String imei = await ImeiPlugin.getImei();
-        print(imei);
-        var data = {"param1": user.uid, "param2": password, "param3": imei};
-        var response = await http.post(URL,
-            headers: {
-              "Authorization": "Basic ZWMwdXMzcjpqbnRoJDEzODMh",
-              "Content-Type": "application/json"
-            },
-            body: jsonEncode(data));
-
-        //print("-----------------------------------------------   Data Sign In new ----------------------------------------");
-        var res = jsonDecode(response.body);
-        print(res);
-
-        if (res['success'] == false) {
-          print(res);
-          signOut();
-        } else {
-          return _userFromFirebase(user);
+    String imei = await ImeiPlugin.getImei();
+    print(imei);
+    QuerySnapshot imeiList = await collectionReference.get();
+    if(action == "Inicio") { //Looking for the first login
+      if (imeiList.docs.length != 0) {
+        for(var doc in imeiList.docs) {
+          print("DOC ID:");
+          print(doc.id);
+          if (doc.id == imei) { //Checking if the imei is registered
+            print("I find an imei!!");
+            try {
+              UserCredential result = await _auth.signInWithEmailAndPassword(email: email, password: password);
+              User user = result.user;
+              return _userFromFirebase(user);
+            } catch (e) {
+              //print(e.toString());
+              return null;
+            }
+          } else { //Imei not registered
+            print("IMEI DOES NOT EXIST");
+            return null;
+          }
         }
-      } else {
-        return _userFromFirebase(user);
       }
-    } catch (e) {
-      print(e.toString());
-      return null;
     }
   }
 
   //Sign out
   Future signOut() async {
     try {
-      var data = {
+      /*var data = {
         //TODO Future update, connect to firebase cloud function
         "param1": uid,
         "param2": "12345",
@@ -76,7 +68,7 @@ class AuthService {
             "Authorization": "Basic ZWMwdXMzcjpqbnRoJDEzODMh",
             "Content-Type": "application/json"
           },
-          body: jsonEncode(data));
+          body: jsonEncode(data));*/
 
       return await _auth.signOut();
     } catch (e) {

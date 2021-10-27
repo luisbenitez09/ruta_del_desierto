@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:ruta_del_desierto/Modelos/MyUser.dart';
 import 'package:ruta_del_desierto/Controladores/auth.dart';
 import 'package:provider/provider.dart';
-import 'package:http/http.dart' as http;
 
 class Data extends StatefulWidget {
   final Function changeView;
@@ -59,12 +58,12 @@ class _DataState extends State<Data> {
       fullUID = '$url$uid';
     });
 
-    var response = await http.get(fullUID, headers: {
+    /*var response = await http.get(fullUID, headers: {
       "Authorization": "Basic ZWMwdXMzcjpqbnRoJDEzODMh",
       "Content-Type": "application/json"
-    });
-
-    if (response.statusCode == 200) {
+    });*/
+    /*
+    if (true) {
       var res = jsonDecode(response.body);
       setState(() {
         for (int i = 0; i < 6; i++) {
@@ -111,7 +110,7 @@ class _DataState extends State<Data> {
         }
         subtotal = driverCount.toString();
       });
-    }
+    }*/
   }
 
   @override

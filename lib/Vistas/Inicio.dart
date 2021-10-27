@@ -1,19 +1,16 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ruta_del_desierto/Controladores/auth.dart';
 import 'package:ruta_del_desierto/Modelos/MyUser.dart';
-import 'package:http/http.dart' as http;
 
-class Respuesta {
+class Response {
   final bool success;
   final String error;
 
-  Respuesta({this.success, this.error});
+  Response({this.success, this.error});
 
-  factory Respuesta.fromJson(Map<String, dynamic> json) {
-    return Respuesta(success: json['success'], error: json['errorMessage']);
+  factory Response.fromJson(Map<String, dynamic> json) {
+    return Response(success: json['success'], error: json['errorMessage']);
   }
 }
 
@@ -28,8 +25,8 @@ class Inicio extends StatefulWidget {
 class _InicioState extends State<Inicio> {
   String pass = '';
   //TODO Future update, connect to firebase cloud function
-  static const URL =
-      'http://187.141.142.89:5558/WsServicesApiRsd/ruta/checkticket';
+  //static const URL =
+    //  'http://187.141.142.89:5558/WsServicesApiRsd/ruta/checkticket';
 
   final passInput = TextEditingController();
   clearInput() {
@@ -87,8 +84,8 @@ class _InicioState extends State<Inicio> {
         driverName = user.name;
         driverUID = user.uid;
         setState(() {
-          driver = driverName;
-          uid = driverUID;
+          //driver = driverName;
+          //uid = driverUID;
           myFocusNode = FocusNode();
         });
       }
@@ -180,7 +177,7 @@ class _InicioState extends State<Inicio> {
                         ],
                       )),
                       Text(
-                        driver,
+                        "driver",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 40.0,
@@ -194,19 +191,19 @@ class _InicioState extends State<Inicio> {
                           'Ruta del Desierto les desea un excelente día.',
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 28.0,
+                            fontSize: 30.0,
                             fontWeight: FontWeight.bold,
                             fontFamily: 'Gilroy',
                           ),
                         ),
                       ),
                       Container(
-                        margin: EdgeInsets.only(top: 60.0),
+                        margin: EdgeInsets.only(top: 30.0),
                         child: Text(
                           'Ruta del Desierto wishes you an excelent day.',
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 28.0,
+                            fontSize: 30.0,
                             fontFamily: 'Gilroy',
                           ),
                         ),
@@ -418,9 +415,10 @@ class _InicioState extends State<Inicio> {
             TextButton(
               child: Text('Aceptar'),
               onPressed: () async {
-                dynamic result = await _auth.sigIn(user.email, pass, 'Confirm');
+                _auth.signOut();
+                //dynamic result = await _auth.sigIn(user.email, pass, 'Confirm');
 
-                if (result == null) {
+                /*if (result == null) {
                   setState(() => clearInput());
                   _badPass();
                 } else {
@@ -430,7 +428,7 @@ class _InicioState extends State<Inicio> {
                     Navigator.of(context).pop();
                     widget.changeView();
                   }
-                }
+                }*/
               },
             ),
             TextButton(
@@ -482,21 +480,21 @@ class _InicioState extends State<Inicio> {
       "param2": uid,
       "param3": "725" //Check if its still needed
     };
-    var response = await http.post(URL,
+    /*var response = await http.post(URL,
         headers: {
           "Authorization": "Basic ZWMwdXMzcjpqbnRoJDEzODMh",
           "Content-Type": "application/json"
         },
-        body: jsonEncode(data));
+        body: jsonEncode(data));*/
 
-    var res = jsonDecode(response.body);
-    print(res);
+    //var res = jsonDecode(response.body);
+    //print(res);
 
     setState(() {
       clearCodeInput();
       FocusScope.of(context).requestFocus(myFocusNode);
     });
-
+    /*
     if (response.statusCode == 200) {
       Respuesta res = Respuesta.fromJson(jsonDecode(response.body));
       if (res.success) {
@@ -522,7 +520,7 @@ class _InicioState extends State<Inicio> {
         alert = msjAlert;
         alertEN = msjAlertEN;
       });
-    }
+    }*/
     await Future.delayed(const Duration(milliseconds: 1000));
     setState(() {
       messageES = defaultMsg;
